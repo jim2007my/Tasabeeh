@@ -30,7 +30,7 @@
             height: 100dvh;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* يمنع اهتزاز الصفحة بالكامل */
+            overflow: hidden;
             color: var(--text-dark);
         }
 
@@ -47,6 +47,7 @@
             background: none; border: none;
             color: var(--primary-gold);
             cursor: pointer;
+            order: 3; /* يجعله أقصى اليسار في RTL */
         }
 
         .logo-area {
@@ -55,6 +56,7 @@
             gap: 8px;
             font-weight: 900;
             font-size: 1.3rem;
+            order: 2; /* في المنتصف */
         }
 
         .top-select {
@@ -65,6 +67,7 @@
             font-size: 0.9rem;
             font-weight: 700;
             max-width: 130px;
+            order: 1; /* يجعله أقصى اليمين في RTL */
         }
 
         /* --- Main Card --- */
@@ -75,7 +78,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .zikr-card {
@@ -92,21 +95,21 @@
 
         /* --- Counter --- */
         .counter-circle {
-            width: clamp(200px, 55vw, 280px);
-            height: clamp(200px, 55vw, 280px);
+            width: clamp(230px, 60vw, 300px);
+            height: clamp(230px, 60vw, 300px);
             background: var(--primary-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
+            font-size: 6rem;
             font-weight: 900;
             color: var(--text-dark);
             box-shadow: 0 15px 35px rgba(197, 160, 89, 0.4);
             cursor: pointer;
             border: 8px solid rgba(255,255,255,0.3);
             transition: transform 0.05s ease-out;
-            will-change: transform; /* يمنع الاهتزاز */
+            will-change: transform;
         }
 
         .counter-circle:active { transform: scale(0.95); }
@@ -121,53 +124,16 @@
         .btn {
             flex: 1;
             max-width: 140px;
-            padding: 12px;
-            border-radius: 15px;
+            padding: 15px;
+            border-radius: 18px;
             border: none;
             color: white;
             font-weight: 700;
             cursor: pointer;
+            font-size: 1rem;
         }
         .btn-undo { background: var(--accent-blue); }
         .btn-reset { background: var(--accent-red); }
-
-        /* --- Stats Card --- */
-        .stats-sheet {
-            background: var(--white);
-            border-radius: 30px 30px 0 0;
-            padding: 20px;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #fff9f9;
-            padding: 12px 15px;
-            border-radius: 15px;
-            margin-bottom: 10px;
-        }
-
-        .edit-goal { cursor: pointer; font-size: 1.2rem; }
-
-        /* --- Progress --- */
-        .progress-box { display: flex; justify-content: center; padding: 10px; }
-        .circular-progress { width: 120px; height: 120px; position: relative; }
-        svg { width: 120px; height: 120px; transform: rotate(-90deg); }
-        circle { fill: none; stroke-width: 10; stroke-linecap: round; }
-        .bg-circle { stroke: #eee; }
-        .fg-circle {
-            stroke: var(--primary-gold);
-            stroke-dasharray: 314;
-            stroke-dashoffset: 314;
-            transition: stroke-dashoffset 0.4s ease;
-        }
-        .progress-text {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
 
         /* --- FAB --- */
         .fab {
@@ -181,20 +147,21 @@
             cursor: pointer; z-index: 99;
         }
 
-        /* --- Sidebar --- */
+        /* --- Sidebar (تم تعديله ليفتح من اليسار) --- */
         .sidebar {
-            position: fixed; top: 0; right: -100%;
+            position: fixed; top: 0; left: -100%;
             width: 85%; max-width: 320px; height: 100%;
             background: var(--white); z-index: 1001;
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column;
+            direction: rtl;
         }
-        .sidebar.active { right: 0; }
+        .sidebar.active { left: 0; }
         .sidebar-header {
             background: var(--primary-gold);
             padding: 40px 20px; color: white; text-align: center;
         }
-        .sidebar-content { padding: 20px; flex: 1; overflow-y: auto; } /* إصلاح التمرير */
+        .sidebar-content { padding: 20px; flex: 1; overflow-y: auto; }
         
         .sidebar-title { color: #999; font-size: 0.8rem; font-weight: 700; margin: 15px 0 10px; }
         .menu-card {
@@ -268,14 +235,14 @@
     </div>
 
     <header>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        <div class="logo-area">🌿 تسابيحاتي</div>
         <select class="top-select" id="zikrSelect" onchange="updateZikr()">
             <option>سبحان الله</option>
             <option>الحمد لله</option>
             <option>الله أكبر</option>
             <option>استغفر الله</option>
         </select>
+        <div class="logo-area">🌿 تسابيحاتي</div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
     </header>
 
     <div class="main-container">
@@ -293,7 +260,6 @@
         </div>
     </div>
 
-
     <div class="fab" onclick="addNewZikr()">
         <span>+</span> أضف تسبيحة
     </div>
@@ -301,19 +267,14 @@
     <script>
         // تحميل البيانات من الذاكرة
         let count = parseInt(localStorage.getItem('myCount')) || 0;
-        let goal = parseInt(localStorage.getItem('myGoal')) || 1000;
         let customZikrs = JSON.parse(localStorage.getItem('customZikrs')) || [];
 
-        const circle = document.getElementById('fgCircle');
         const counterText = document.getElementById('counter');
-        const percentText = document.getElementById('percentText');
-        const goalLabel = document.getElementById('goalLabel');
         const zikrSelect = document.getElementById('zikrSelect');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
 
         function init() {
-            // إضافة الأذكار المخصصة للقائمة
             customZikrs.forEach(z => {
                 let opt = document.createElement('option');
                 opt.value = z; opt.text = z;
@@ -324,18 +285,7 @@
 
         function updateUI() {
             counterText.innerText = count;
-            let percentage = (count / goal) * 100;
-            if (percentage > 100) percentage = 100;
-            
-            percentText.innerText = Math.floor(percentage) + "%";
-            goalLabel.innerText = `${count} / ${goal}`;
-
-            let offset = 314 - (percentage / 100) * 314;
-            circle.style.strokeDashoffset = offset;
-            
-            // حفظ البيانات
             localStorage.setItem('myCount', count);
-            localStorage.setItem('myGoal', goal);
         }
 
         function increment() {
@@ -350,14 +300,6 @@
 
         function reset() {
             if(confirm("هل تريد تصفير العداد؟")) { count = 0; updateUI(); }
-        }
-
-        function editGoal() {
-            let newGoal = prompt("عدل إجمالي اليوم المطلوب:", goal);
-            if (newGoal && !isNaN(newGoal)) {
-                goal = parseInt(newGoal);
-                updateUI();
-            }
         }
 
         function addNewZikr() {
