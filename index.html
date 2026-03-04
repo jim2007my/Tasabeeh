@@ -3,313 +3,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ذاكر | المسبحة الاحترافية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Tasabeeh Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #e0e5ec;
-            --text: #31344b;
-            --accent: #4b7cf3;
+            --bg: #eef2f7;
+            --text: #2d3436;
+            --accent: #4834d4;
             --shadow-light: #ffffff;
-            --shadow-dark: #a3b1c6;
-            --danger: #ff4757;
+            --shadow-dark: #c9d6df;
+            --danger: #eb4d4b;
+            --sidebar-bg: #fdfdfd;
         }
 
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            touch-action: manipulation;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: 'Cairo', sans-serif;
-            margin: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            overflow: hidden; /* لمنع السكرول غير المرغوب */
         }
 
-        /* القائمة الجانبية */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -280px; /* مخفية */
-            width: 280px;
-            height: 100%;
-            background: var(--bg);
-            box-shadow: -10px 0 20px var(--shadow-dark);
-            z-index: 1000;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 40px 20px;
-        }
-
-        .sidebar.active { right: 0; }
-
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.3);
-            display: none;
-            z-index: 999;
-        }
-
-        .menu-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            background: var(--bg);
-            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* الهيدر */
+        /* --- Header --- */
         header {
-            padding: 20px;
+            height: 70px;
+            padding: 0 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: flex-start;
+            z-index: 100;
         }
 
         .menu-btn {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 12px;
             background: var(--bg);
-            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
             border: none;
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* محتوى التطبيق */
+        /* --- Sidebar Optimized --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--sidebar-bg);
+            z-index: 1001;
+            /* استخدام transform بدلا من right للسرعة */
+            transform: translate3d(100%, 0, 0); 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.05);
+        }
+
+        .sidebar.active {
+            transform: translate3d(0, 0, 0);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-header {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--bg);
+        }
+
+        .sidebar-section-title {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin: 20px 0 10px;
+            font-weight: 700;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: #555;
+            transition: 0.2s;
+        }
+
+        .menu-item:active {
+            background: var(--bg);
+            color: var(--accent);
+        }
+
+        /* --- Main Content (Responsive) --- */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 30px;
+            justify-content: space-evenly; /* توزيع العناصر بشكل متساوي */
+            padding: 10px 0 40px;
         }
 
-        .zikr-selector {
-            background: var(--bg);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 15px;
-            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
-            font-family: 'Cairo';
-            font-size: 1.1rem;
-            color: var(--text);
+        .zikr-selector-wrapper {
             width: 85%;
-            max-width: 320px;
-            outline: none;
+            max-width: 400px;
+            background: var(--bg);
+            padding: 8px 15px;
+            border-radius: 15px;
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
         }
 
-        /* الزر الرئيسي (المسبحة) */
+        #zikrSelect {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-family: 'Cairo';
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent);
+            outline: none;
+            text-align: center;
+        }
+
+        #currentZikrTitle {
+            font-size: clamp(1.8rem, 8vw, 2.5rem); /* حجم خط متجاوب */
+            font-weight: 900;
+            color: var(--text);
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        /* السبحة - متجاوبة تماماً */
         .tasbih-btn {
-            width: 280px;
-            height: 280px;
+            width: clamp(220px, 70vw, 320px);
+            height: clamp(220px, 70vw, 320px);
             border-radius: 50%;
             background: var(--bg);
-            box-shadow: 15px 15px 30px var(--shadow-dark), -15px -15px 30px var(--shadow-light);
-            border: none;
+            box-shadow: 20px 20px 40px var(--shadow-dark), -20px -20px 40px var(--shadow-light);
+            border: 10px solid var(--bg);
             cursor: pointer;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: transform 0.1s;
         }
 
         .tasbih-btn:active {
+            transform: scale(0.96);
             box-shadow: inset 10px 10px 20px var(--shadow-dark), inset -10px -10px 20px var(--shadow-light);
-            transform: scale(0.97);
-        }
-
-        #currentZikr {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 5px;
         }
 
         #counterDisplay {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1;
+            font-size: clamp(4rem, 15vw, 7rem);
+            font-weight: 900;
+            color: var(--accent);
         }
 
-        /* التحكم السفلية */
+        /* --- Controls --- */
         .controls {
             display: flex;
             gap: 25px;
+            width: 100%;
+            justify-content: center;
         }
 
         .action-btn {
-            padding: 15px 30px;
+            width: 110px;
+            height: 55px;
             border-radius: 15px;
             border: none;
             background: var(--bg);
-            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
-            font-family: 'Cairo';
-            font-weight: bold;
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            font-family: 'Cairo';
+            font-weight: 700;
+            transition: 0.2s;
         }
 
         .action-btn:active {
-            box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light);
+            box-shadow: inset 3px 3px 6px var(--shadow-dark);
+            transform: scale(0.95);
         }
 
-        /* المودال الاحترافي (بديل Alert) */
+        .btn-reset { color: var(--danger); }
+        .btn-undo { color: var(--accent); }
+
+        /* --- Modal Responsive --- */
         .modal {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: var(--bg);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: #fff;
             padding: 30px;
             border-radius: 25px;
-            box-shadow: 20px 20px 60px var(--shadow-dark);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
             z-index: 2000;
-            width: 85%;
-            max-width: 300px;
+            width: 85%; max-width: 320px;
             text-align: center;
-            display: none;
-            opacity: 0;
-            transition: 0.3s;
+            visibility: hidden; opacity: 0;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .modal.active {
-            display: block;
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .modal-btns {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .btn-confirm { color: var(--danger); }
+        .modal.active { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .confirm-btn { background: var(--danger); color: white; padding: 10px 25px; border-radius: 12px; border: none; font-family: 'Cairo'; font-weight: 700; cursor: pointer; margin-left: 10px; }
+        .cancel-btn { background: #f0f2f5; color: #555; padding: 10px 25px; border-radius: 12px; border: none; font-family: 'Cairo'; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
+    
     <div class="sidebar" id="sidebar">
-        <h2 style="margin-top:0">القائمة</h2>
-        <div class="menu-item">🕌 أذكار الصباح والمساء</div>
-        <div class="menu-item">📊 إحصائياتي</div>
-        <div class="menu-item">🔔 التنبيهات</div>
-        <div class="menu-item">⚙️ الإعدادات</div>
-        <div class="menu-item">⭐ تقييم التطبيق</div>
-        <div class="menu-item">📧 اتصل بنا</div>
+        <div class="sidebar-header">TASABEEH</div>
+        
+        <div class="sidebar-section-title">المحتوى الرئيسي</div>
+        <div class="menu-item"><span>📖</span> القرآن الكريم</div>
+        <div class="menu-item"><span>📿</span> الأذكار</div>
+        <div class="menu-item"><span>🕌</span> مواقيت الصلاة</div>
+        <div class="menu-item"><span>🌙</span> التقويم الهجري</div>
+
+        <div class="sidebar-section-title">الدعم والمعلومات</div>
+        <div class="menu-item"><span>☕</span> ادعم المطور</div>
+        <div class="menu-item"><span>ℹ️</span> من نحن</div>
     </div>
 
     <header>
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        <div style="font-weight: 800; font-size: 1.2rem;">ذاكر</div>
-        <div style="width:50px"></div> </header>
+    </header>
 
     <div class="main-content">
-        <select class="zikr-selector" id="zikrSelect" onchange="changeZikr()">
-            <option value="سبحان الله">سبحان الله</option>
-            <option value="الحمد لله">الحمد لله</option>
-            <option value="الله أكبر">الله أكبر</option>
-            <option value="لا إله إلا الله">لا إله إلا الله</option>
-            <option value="استغفر الله">استغفر الله</option>
-        </select>
+        <div class="zikr-selector-wrapper">
+            <select id="zikrSelect" onchange="changeZikr()">
+                <option value="سبحان الله">سبحان الله</option>
+                <option value="الحمد لله">الحمد لله</option>
+                <option value="الله أكبر">الله أكبر</option>
+                <option value="لا إله إلا الله">لا إله إلا الله</option>
+                <option value="استغفر الله">استغفر الله</option>
+                <option value="لاحول ولاقوة إلا بالله">لاحول ولاقوة إلا بالله</option>
+            </select>
+        </div>
 
-        <button class="tasbih-btn" id="mainBtn" onclick="increment()">
-            <span id="currentZikr">سبحان الله</span>
+        <div id="currentZikrTitle">سبحان الله</div>
+
+        <button class="tasbih-btn" onclick="increment()">
             <span id="counterDisplay">0</span>
         </button>
 
         <div class="controls">
-            <button class="action-btn" onclick="showResetModal()">🔄 إعادة</button>
-            <button class="action-btn" onclick="vibrateDevice()">📳 هزاز</button>
+            <button class="action-btn btn-reset" onclick="showResetModal()">
+                <span>🔄</span> تصفير
+            </button>
+            <button class="action-btn btn-undo" onclick="decrement()">
+                <span>↩️</span> تراجع
+            </button>
         </div>
     </div>
 
     <div class="modal" id="resetModal">
-        <h3 style="margin-top:0">تصفير العداد؟</h3>
-        <p>هل أنت متأكد من إعادة عداد <br><b id="modalZikrName"></b> إلى الصفر؟</p>
-        <div class="modal-btns">
-            <button class="action-btn btn-confirm" onclick="confirmReset()">نعم، إعادة</button>
-            <button class="action-btn" onclick="hideResetModal()">إلغاء</button>
+        <h3 style="margin-bottom:15px">تصفير العداد</h3>
+        <p>هل أنت متأكد من تصفير عداد <br><b id="modalZikrName" style="color:var(--accent)"></b>؟</p>
+        <div style="margin-top: 25px;">
+            <button class="confirm-btn" onclick="confirmReset()">تصفير</button>
+            <button class="cancel-btn" onclick="hideResetModal()">إلغاء</button>
         </div>
     </div>
 
     <script>
-        // نظام الحفظ الذكي (عداد لكل ذكر)
-        let state = JSON.parse(localStorage.getItem('tasbih_pro_data')) || {
+        // تخزين البيانات
+        let state = JSON.parse(localStorage.getItem('tasabeeh_v4_data')) || {
             current: 'سبحان الله',
             counts: {
                 'سبحان الله': 0, 'الحمد لله': 0, 'الله أكبر': 0, 
-                'لا إله إلا الله': 0, 'استغفر الله': 0
+                'لا إله إلا الله': 0, 'استغفر الله': 0, 'لاحول ولاقوة إلا بالله': 0
             }
         };
 
         const counterDisplay = document.getElementById('counterDisplay');
-        const zikrText = document.getElementById('currentZikr');
+        const zikrTitle = document.getElementById('currentZikrTitle');
         const zikrSelect = document.getElementById('zikrSelect');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
         const resetModal = document.getElementById('resetModal');
 
-        // تحديث الواجهة عند التحميل
         function init() {
             zikrSelect.value = state.current;
             updateUI();
         }
 
         function updateUI() {
-            zikrText.innerText = state.current;
+            zikrTitle.innerText = state.current;
             counterDisplay.innerText = state.counts[state.current];
-            localStorage.setItem('tasbih_pro_data', JSON.stringify(state));
+            localStorage.setItem('tasabeeh_v4_data', JSON.stringify(state));
         }
 
         function increment() {
             state.counts[state.current]++;
+            if (navigator.vibrate) navigator.vibrate(40);
             updateUI();
-            if (navigator.vibrate) navigator.vibrate(60);
+        }
+
+        function decrement() {
+            if (state.counts[state.current] > 0) {
+                state.counts[state.current]--;
+                if (navigator.vibrate) navigator.vibrate(25);
+                updateUI();
+            }
         }
 
         function changeZikr() {
             state.current = zikrSelect.value;
-            updateUI();
+            // إضافة تأثير انسيابي عند التغيير
+            zikrTitle.style.opacity = 0;
+            setTimeout(() => {
+                updateUI();
+                zikrTitle.style.opacity = 1;
+            }, 100);
         }
 
-        // القائمة الجانبية
         function toggleMenu() {
             sidebar.classList.toggle('active');
-            overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+            overlay.classList.toggle('active');
         }
 
-        // مودال الإعادة الاحترافي
         function showResetModal() {
             document.getElementById('modalZikrName').innerText = state.current;
             resetModal.classList.add('active');
-            overlay.style.display = 'block';
+            overlay.classList.add('active');
         }
 
         function hideResetModal() {
             resetModal.classList.remove('active');
-            if(!sidebar.classList.contains('active')) overlay.style.display = 'none';
+            if(!sidebar.classList.contains('active')) overlay.classList.remove('active');
         }
 
         function confirmReset() {
@@ -318,12 +383,7 @@
             hideResetModal();
         }
 
-        function vibrateDevice() {
-            if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 100]);
-            }
-        }
-
+        // تشغيل التطبيق
         init();
     </script>
 </body>
