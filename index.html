@@ -30,7 +30,7 @@
             color: var(--text-main);
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* تم حل مشكلة الثبات هنا */
+            overflow-y: auto;
         }
 
         /* --- Header --- */
@@ -64,7 +64,7 @@
         }
 
         .top-select {
-            background: var(--white);
+            background: white;
             padding: 8px 15px;
             border-radius: 15px;
             border: 2px solid var(--light-gold);
@@ -95,7 +95,7 @@
             text-align: center;
             box-shadow: var(--shadow);
             border: 1px solid rgba(255,255,255,0.5);
-            margin-bottom: 50px; /* مسافة كافية بين النص والزر */
+            margin-bottom: 50px;
         }
 
         .zikr-card h2 {
@@ -172,14 +172,14 @@
         .btn-undo { background: #54a0ff; }
         .btn-reset { background: #ff6b6b; }
 
-        /* --- Sidebar (التحسين المطلوب) --- */
+        /* --- Sidebar --- */
         .sidebar {
-            position: fixed; top: 0; right: -100%; /* غيرت الإتجاه لليمين لأنه RTL أصح */
+            position: fixed; top: 0; right: -100%;
             width: 85%; max-width: 320px; height: 100%;
             background: white; z-index: 1100;
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column;
-            overflow-y: auto; /* جعلت القائمة بالكامل قابلة للتمرير */
+            overflow-y: auto;
             box-shadow: -10px 0 30px rgba(0,0,0,0.1);
         }
         
@@ -206,35 +206,6 @@
             color: white; margin-left: 15px; font-size: 1.2rem;
         }
 
-        /* --- FAB --- */
-        .fab {
-            position: fixed; bottom: 30px; left: 30px;
-            background: var(--dark-gold);
-            color: white; padding: 12px 25px;
-            border-radius: 50px; font-weight: 700;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            cursor: pointer; z-index: 90;
-            display: flex; align-items: center; gap: 10px;
-        }
-
-        /* --- Modal --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
-            display: none; align-items: center; justify-content: center;
-            z-index: 2000; padding: 20px;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-card {
-            background: white; width: 100%; max-width: 380px;
-            border-radius: 30px; padding: 30px; text-align: center;
-        }
-        .modal-input {
-            width: 100%; padding: 15px; border-radius: 15px;
-            border: 2px solid #eee; margin: 20px 0; font-size: 1rem;
-            text-align: center; outline: none;
-        }
-
         .overlay-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.3); display: none; z-index: 1000;
@@ -244,19 +215,6 @@
 <body>
 
     <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
-
-    <div class="modal-overlay" id="customModal">
-        <div class="modal-card">
-            <h3 id="modalTitle">إضافة تسبيحة</h3>
-            <div id="inputContainer">
-                <input type="text" id="modalInput" class="modal-input" placeholder="مثلاً: لا حول ولا قوة إلا بالله">
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn btn-undo" id="modalConfirmBtn" style="flex:2">حفظ</button>
-                <button class="btn" onclick="closeModal()" style="background:#eee; color:#333; flex:1">إلغاء</button>
-            </div>
-        </div>
-    </div>
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -270,7 +228,7 @@
             <div class="menu-card"><div style="display:flex;align-items:center;"><div class="icon-box" style="background:#55a363">📿</div><span>حصن المسلم</span></div><span>❯</span></div>
             <div class="menu-card"><div style="display:flex;align-items:center;"><div class="icon-box" style="background:#2a9d8f">🕌</div><span>مواقيت الصلاة</span></div><span>❯</span></div>
             <div class="menu-card"><div style="display:flex;align-items:center;"><div class="icon-box" style="background:#e9c46a">✨</div><span>فضل الذكر</span></div><span>❯</span></div>
-            <div style="height: 50px;"></div> </div>
+        </div>
     </div>
 
     <header>
@@ -281,6 +239,8 @@
             <option value="الحمد لله">الحمد لله</option>
             <option value="الله أكبر">الله أكبر</option>
             <option value="أستغفر الله">أستغفر الله</option>
+            <option value="لا إله إلا الله">لا إله إلا الله</option>
+            <option value="اللهم صلِ على محمد">اللهم صلِ على محمد</option>
         </select>
     </header>
 
@@ -302,30 +262,13 @@
         </div>
     </div>
 
-    <div class="fab" onclick="promptNewZikr()">
-        <span style="font-size: 1.5rem;">+</span> أضف ذكراً جديداً
-    </div>
-
     <script>
+        // استعادة البيانات من الذاكرة المحلية
         let allCounts = JSON.parse(localStorage.getItem('allCounts')) || {};
-        let customZikrs = JSON.parse(localStorage.getItem('customZikrs')) || [];
 
         const counterText = document.getElementById('counter');
         const zikrSelect = document.getElementById('zikrSelect');
         const currentZikrTitle = document.getElementById('currentZikr');
-        const customModal = document.getElementById('customModal');
-        const modalInput = document.getElementById('modalInput');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
-
-        function init() {
-            customZikrs.forEach(z => {
-                let opt = document.createElement('option');
-                opt.value = z; opt.text = z;
-                zikrSelect.add(opt);
-            });
-            updateUI();
-        }
 
         function updateUI() {
             let selectedZikr = zikrSelect.value;
@@ -343,7 +286,7 @@
             let selectedZikr = zikrSelect.value;
             allCounts[selectedZikr] = (allCounts[selectedZikr] || 0) + 1;
             
-            // اهتزاز بسيط لو مدعوم في المتصفح
+            // اهتزاز بسيط للهواتف المحمولة
             if (navigator.vibrate) navigator.vibrate(50);
             
             updateUI();
@@ -358,41 +301,10 @@
         }
 
         function resetCounter() {
-            openModal(`تصفير عداد "${zikrSelect.value}"؟`, false, () => {
+            if(confirm(`هل تريد تصفير عداد "${zikrSelect.value}"؟`)) {
                 allCounts[zikrSelect.value] = 0;
                 updateUI();
-            });
-        }
-
-        function openModal(title, showInput, onConfirm) {
-            modalTitle.innerText = title;
-            modalInput.value = "";
-            document.getElementById('inputContainer').style.display = showInput ? 'block' : 'none';
-            customModal.classList.add('active');
-            
-            modalConfirmBtn.onclick = () => {
-                onConfirm(modalInput.value);
-                closeModal();
-            };
-        }
-
-        function closeModal() { customModal.classList.remove('active'); }
-
-        function promptNewZikr() {
-            openModal("أضف ذكراً خاصاً بك", true, (val) => {
-                if (val && val.trim() !== "") {
-                    let name = val.trim();
-                    if (!customZikrs.includes(name)) {
-                        customZikrs.push(name);
-                        localStorage.setItem('customZikrs', JSON.stringify(customZikrs));
-                        let opt = document.createElement('option');
-                        opt.value = name; opt.text = name;
-                        zikrSelect.add(opt);
-                    }
-                    zikrSelect.value = name;
-                    updateUI();
-                }
-            });
+            }
         }
 
         function toggleMenu() {
@@ -402,7 +314,8 @@
             overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
         }
 
-        init();
+        // تشغيل التهيئة عند تحميل الصفحة
+        updateUI();
     </script>
 </body>
 </html>
