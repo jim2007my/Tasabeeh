@@ -254,12 +254,38 @@ color:#bbb;
 }
 
 .quran-header-bar {
-    background: white;
-    padding: 10px 15px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    padding: 12px 20px;
     position: sticky;
     top: 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
     z-index: 2001;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* المحسن: زر العودة الاحترافي */
+.btn-back-quran {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: var(--primary-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.btn-back-quran:active {
+    transform: scale(0.9) rotate(15deg);
+    background: var(--light-gold);
 }
 
 .search-wrapper {
@@ -466,10 +492,8 @@ animation:tap .12s ease;
 
 <div id="quranContainer" class="quran-container">
     <div class="quran-header-bar">
-        <div style="display:flex; align-items:center; gap:15px; width:100%">
-             <button class="btn-undo" style="padding:8px 15px; border-radius:10px; font-size: 0.8rem" id="quranBackBtn" onclick="closeQuran()">إغلاق</button>
-             <h3 id="quranTitle" style="flex:1; font-size: 1rem">المصحف الإلكتروني</h3>
-        </div>
+         <button class="btn-back-quran" id="quranBackBtn" onclick="closeQuran()">❯</button>
+         <h3 id="quranTitle" style="flex:1; font-size: 1.1rem; font-weight: 800; color: var(--dark-gold);">المصحف الإلكتروني</h3>
     </div>
     
     <div id="searchWrapper" class="search-wrapper">
@@ -600,9 +624,8 @@ function renderSurahs(list) {
 function filterSurahs() {
     const term = quranSearch.value.trim();
     if(surahViewDiv.style.display === 'block') {
-        highlightAyah(term); // البحث عن آية
+        highlightAyah(term); 
     } else {
-        // البحث عن سورة بالاسم أو الرقم
         const filtered = allSurahs.filter(s => 
             s.name.includes(term) || s.number.toString() === term
         );
@@ -614,7 +637,8 @@ async function loadSurah(id, name) {
     quranTitle.innerText = 'جاري التحميل...';
     surahListDiv.style.display = 'none';
     surahViewDiv.style.display = 'block';
-    quranBackBtn.innerText = 'الفهرس';
+    // تغيير الأيقونة لتشبه الرجوع للفهرس
+    quranBackBtn.innerHTML = '❯'; 
     quranSearch.placeholder = "بحث عن كلمة أو آية في السورة...";
     quranSearch.value = "";
     
@@ -657,7 +681,8 @@ function showSurahListUI() {
     surahViewDiv.style.display = 'none';
     surahListDiv.style.display = 'flex';
     quranTitle.innerText = 'المصحف الإلكتروني';
-    quranBackBtn.innerText = 'إغلاق';
+    // تغيير الأيقونة لتشبه الخروج من المصحف
+    quranBackBtn.innerHTML = '✕'; 
     quranSearch.placeholder = "ابحث باسم السورة أو رقمها...";
     quranSearch.value = "";
     renderSurahs(allSurahs);
