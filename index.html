@@ -67,8 +67,9 @@
             border: 1px solid #eee;
             font-size: 0.9rem;
             font-weight: 700;
-            max-width: 130px;
+            max-width: 140px;
             order: 1;
+            outline: none;
         }
 
         /* --- Main Card --- */
@@ -87,12 +88,12 @@
             background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(197, 160, 89, 0.2);
-            padding: 25px;
+            padding: 20px;
             border-radius: 25px;
             text-align: center;
         }
 
-        .zikr-card h2 { font-size: 1.8rem; font-weight: 900; min-height: 1.2em; }
+        .zikr-card h2 { font-size: 1.6rem; font-weight: 900; min-height: 1.2em; color: var(--primary-gold); }
 
         /* --- Counter --- */
         .counter-circle {
@@ -125,27 +126,29 @@
         .btn {
             flex: 1;
             max-width: 140px;
-            padding: 15px;
+            padding: 12px;
             border-radius: 18px;
             border: none;
             color: white;
             font-weight: 700;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         .btn-undo { background: var(--accent-blue); }
         .btn-reset { background: var(--accent-red); }
 
-        /* --- FAB --- */
+        /* --- FAB (تصغير زر الإضافة) --- */
         .fab {
             position: fixed; bottom: 25px; left: 25px;
             background: var(--primary-gold);
-            color: var(--text-dark);
-            padding: 12px 20px;
+            color: var(--white);
+            padding: 8px 16px; /* تصغير البادينج */
             border-radius: 50px;
             font-weight: 700;
-            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.4);
+            font-size: 0.85rem; /* تصغير الخط */
+            box-shadow: 0 8px 15px rgba(197, 160, 89, 0.3);
             cursor: pointer; z-index: 99;
+            display: flex; align-items: center; gap: 5px;
         }
 
         /* --- Sidebar --- */
@@ -188,27 +191,24 @@
         }
         .modal-card {
             background: var(--white);
-            width: 100%; max-width: 400px;
+            width: 100%; max-width: 350px;
             border-radius: 25px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            transform: translateY(20px);
-            transition: 0.3s ease;
         }
         .modal-overlay.active { display: flex; }
-        .modal-overlay.active .modal-card { transform: translateY(0); }
 
-        .modal-card h3 { margin-bottom: 15px; font-weight: 900; }
+        .modal-card h3 { margin-bottom: 15px; font-weight: 700; }
         .modal-input {
-            width: 100%; padding: 15px; border-radius: 15px;
+            width: 100%; padding: 12px; border-radius: 12px;
             border: 2px solid var(--light-gold);
             font-size: 1rem; outline: none; margin-bottom: 20px;
             text-align: center;
         }
         .modal-btns { display: flex; gap: 10px; }
         .modal-btns button {
-            flex: 1; padding: 12px; border-radius: 12px; border: none;
+            flex: 1; padding: 10px; border-radius: 10px; border: none;
             font-weight: 700; cursor: pointer;
         }
         .confirm-btn { background: var(--primary-gold); color: white; }
@@ -240,57 +240,23 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div style="font-size: 3rem; margin-bottom: 10px;">🌿</div>
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">🌿</div>
             <h2>تسابيحاتي</h2>
         </div>
         <div class="sidebar-content">
             <div class="sidebar-title">المحتوى الرئيسي</div>
-            <div class="menu-card">
-                <div style="display:flex; align-items:center;">
-                    <div class="icon-box" style="background:#7d5a5a">📖</div>
-                    <span>القرآن الكريم</span>
-                </div>
-                <span>❯</span>
-            </div>
-            <div class="menu-card">
-                <div style="display:flex; align-items:center;">
-                    <div class="icon-box" style="background:#55a363">📿</div>
-                    <span>الأذكار</span>
-                </div>
-                <span>❯</span>
-            </div>
-            <div class="menu-card">
-                <div style="display:flex; align-items:center;">
-                    <div class="icon-box" style="background:#2a9d8f">🕌</div>
-                    <span>مواقيت الصلاة</span>
-                </div>
-                <span>❯</span>
-            </div>
-
-            <div class="sidebar-title">مميزات التطبيق</div>
-            <div class="menu-card">
-                <div style="display:flex; align-items:center;">
-                    <div class="icon-box" style="background:#f4a261">🏆</div>
-                    <span>الإنجازات</span>
-                </div>
-                <span>❯</span>
-            </div>
-            <div class="menu-card">
-                <div style="display:flex; align-items:center;">
-                    <div class="icon-box" style="background:#9b59b6">🎨</div>
-                    <span>الثيمات</span>
-                </div>
-                <span>❯</span>
-            </div>
+            <div class="menu-card"><div style="display:flex;align-items:center;"><div class="icon-box" style="background:#7d5a5a">📖</div><span>القرآن الكريم</span></div><span>❯</span></div>
+            <div class="menu-card"><div style="display:flex;align-items:center;"><div class="icon-box" style="background:#55a363">📿</div><span>الأذكار</span></div><span>❯</span></div>
+            <div class="menu-card"><div style="display:flex;align-items:center;"><div class="icon-box" style="background:#2a9d8f">🕌</div><span>مواقيت الصلاة</span></div><span>❯</span></div>
         </div>
     </div>
 
     <header>
-        <select class="top-select" id="zikrSelect" onchange="updateZikr()">
-            <option>سبحان الله</option>
-            <option>الحمد لله</option>
-            <option>الله أكبر</option>
-            <option>استغفر الله</option>
+        <select class="top-select" id="zikrSelect" onchange="changeZikr()">
+            <option value="سبحان الله">سبحان الله</option>
+            <option value="الحمد لله">الحمد لله</option>
+            <option value="الله أكبر">الله أكبر</option>
+            <option value="استغفر الله">استغفر الله</option>
         </select>
         <div class="logo-area">🌿 تسابيحاتي</div>
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
@@ -312,23 +278,24 @@
     </div>
 
     <div class="fab" onclick="promptNewZikr()">
-        <span>+</span> أضف تسبيحة
+        <span style="font-size: 1.2rem;">+</span> أضف تسبيحة
     </div>
 
     <script>
-        let count = parseInt(localStorage.getItem('myCount')) || 0;
+        // تخزين كافة العدادات في كائن واحد
+        let allCounts = JSON.parse(localStorage.getItem('allCounts')) || {};
         let customZikrs = JSON.parse(localStorage.getItem('customZikrs')) || [];
 
         const counterText = document.getElementById('counter');
         const zikrSelect = document.getElementById('zikrSelect');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
+        const currentZikrTitle = document.getElementById('currentZikr');
         const customModal = document.getElementById('customModal');
         const modalInput = document.getElementById('modalInput');
         const modalTitle = document.getElementById('modalTitle');
         const modalConfirmBtn = document.getElementById('modalConfirmBtn');
 
         function init() {
+            // إضافة التسبيحات المخصصة للقائمة
             customZikrs.forEach(z => {
                 let opt = document.createElement('option');
                 opt.value = z; opt.text = z;
@@ -337,22 +304,47 @@
             updateUI();
         }
 
+        // تحديث الشاشة بناءً على التسبيحة المختارة
         function updateUI() {
-            counterText.innerText = count;
-            localStorage.setItem('myCount', count);
+            let selectedZikr = zikrSelect.value;
+            currentZikrTitle.innerText = selectedZikr;
+            
+            // جلب الرقم الخاص بهذه التسبيحة فقط (أو 0 لو جديدة)
+            let currentCount = allCounts[selectedZikr] || 0;
+            counterText.innerText = currentCount;
+
+            // حفظ الحالة العامة
+            localStorage.setItem('allCounts', JSON.stringify(allCounts));
+        }
+
+        function changeZikr() {
+            updateUI();
         }
 
         function increment() {
-            count++;
+            let selectedZikr = zikrSelect.value;
+            allCounts[selectedZikr] = (allCounts[selectedZikr] || 0) + 1;
+            
             if (navigator.vibrate) navigator.vibrate(40);
             updateUI();
         }
 
         function decrement() {
-            if (count > 0) { count--; updateUI(); }
+            let selectedZikr = zikrSelect.value;
+            if (allCounts[selectedZikr] > 0) {
+                allCounts[selectedZikr]--;
+                updateUI();
+            }
         }
 
-        // --- وظائف الـ Modal الاحترافي ---
+        function resetCounter() {
+            openModal(`هل تريد تصفير عداد "${zikrSelect.value}"؟`, false, () => {
+                allCounts[zikrSelect.value] = 0;
+                updateUI();
+            });
+        }
+
+        // --- نظام الـ Modal ---
         function openModal(title, showInput, onConfirm) {
             modalTitle.innerText = title;
             modalInput.value = "";
@@ -365,37 +357,28 @@
             };
         }
 
-        function closeModal() {
-            customModal.classList.remove('active');
-        }
-
-        function resetCounter() {
-            openModal("هل تريد تصفير العداد؟", false, () => {
-                count = 0;
-                updateUI();
-            });
-        }
+        function closeModal() { customModal.classList.remove('active'); }
 
         function promptNewZikr() {
             openModal("إضافة تسبيحة جديدة", true, (val) => {
                 if (val && val.trim() !== "") {
                     let name = val.trim();
-                    customZikrs.push(name);
-                    localStorage.setItem('customZikrs', JSON.stringify(customZikrs));
-                    let opt = document.createElement('option');
-                    opt.value = name; opt.text = name;
-                    zikrSelect.add(opt);
+                    if (!customZikrs.includes(name)) {
+                        customZikrs.push(name);
+                        localStorage.setItem('customZikrs', JSON.stringify(customZikrs));
+                        let opt = document.createElement('option');
+                        opt.value = name; opt.text = name;
+                        zikrSelect.add(opt);
+                    }
                     zikrSelect.value = name;
-                    updateZikr();
+                    updateUI();
                 }
             });
         }
 
-        function updateZikr() {
-            document.getElementById('currentZikr').innerText = zikrSelect.value;
-        }
-
         function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
             sidebar.classList.toggle('active');
             overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
         }
