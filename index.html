@@ -90,7 +90,6 @@
 
         .top-select:hover { transform: translateY(-2px); border-color: var(--primary-gold); }
 
-        /* Professional Zikr Dropdown */
         .zikr-dropdown {
             position: absolute;
             top: calc(100% + 10px);
@@ -202,48 +201,95 @@
         .btn-undo { background: white; color: #555; border: 1px solid #eee; }
         .btn-reset { background: #fff5f5; color: #e74c3c; }
 
+        /* --- SIDEBAR RE-DESIGNED --- */
         .sidebar {
-            position: fixed; top: 0; right: -100%; width: 85%; max-width: 320px; height: 100%;
-            background: white; z-index: 2100; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            position: fixed; top: 0; right: -100%; width: 85%; max-width: 340px; height: 100%;
+            background: #fff; z-index: 2100; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
             box-shadow: -20px 0 60px rgba(0,0,0,0.1);
             display: flex; flex-direction: column;
+            overflow-y: auto;
         }
 
         .sidebar.active { right: 0; }
 
         .sidebar-header { 
-            background: linear-gradient(135deg, var(--primary-gold), var(--accent-gold)); 
-            padding: 60px 30px; 
+            position: relative;
+            background: linear-gradient(135deg, #b38b4d 0%, #8e6d35 100%); 
+            padding: 50px 30px; 
             color: white; 
             text-align: center; 
-            border-bottom-left-radius: 40px;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
         }
 
-        .sidebar-content { padding: 30px 20px; }
+        /* الخلفية الاحترافية المزخرفة */
+        .sidebar-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png');
+            opacity: 0.15;
+            pointer-events: none;
+        }
 
-        .section-title { color:#ccc; font-size:.8rem; font-weight:800; margin:25px 0 15px; letter-spacing:2px; text-transform: uppercase; }
+        .sidebar-header h3 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .sidebar-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            position: relative;
+            font-style: italic;
+        }
+
+        .sidebar-content { padding: 25px 20px; }
+
+        .section-title { 
+            color: var(--primary-gold); 
+            font-size: 0.75rem; 
+            font-weight: 900; 
+            margin: 25px 10px 15px; 
+            letter-spacing: 1px; 
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--soft-gold); }
 
         .menu-card {
-            padding: 16px; 
-            border-radius: 18px; 
+            padding: 14px 18px; 
+            border-radius: 16px; 
             display: flex; 
             align-items: center; 
             justify-content: space-between;
-            margin-bottom: 12px; 
+            margin-bottom: 10px; 
             cursor: pointer; 
-            transition: 0.3s; 
-            background: #fdfdfd;
-            border: 1px solid #f5f5f5;
+            transition: var(--transition); 
+            background: #fafafa;
+            border: 1px solid #f0f0f0;
         }
 
-        .menu-card:hover { background: var(--soft-gold); transform: translateX(-5px); }
+        .menu-card:hover { 
+            background: white; 
+            transform: translateX(-5px); 
+            border-color: var(--primary-gold);
+            box-shadow: 0 8px 20px rgba(179, 139, 77, 0.1);
+        }
 
         .icon-box { 
-            width: 45px; height: 45px; border-radius: 14px; 
+            width: 40px; height: 40px; border-radius: 12px; 
             display: flex; align-items: center; justify-content: center; 
-            color: white; margin-left: 15px; font-size: 1.2rem;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            color: white; margin-left: 15px; font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
+
+        /* -------------------------- */
 
         .quran-container {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff;
@@ -301,26 +347,59 @@
 
 <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
-        <div style="font-size:3.5rem;margin-bottom:15px">✨</div>
-        <h3 style="font-size:1.5rem">تسبيحات</h3>
-        <p style="font-size:0.85rem; opacity: 0.9;">بذكر الله تطمئن القلوب</p>
+        <div style="font-size:3rem;margin-bottom:10px">🌙</div>
+        <h3>تسبيحات</h3>
+        <p>بذكر الله تطمئن القلوب</p>
     </div>
 
     <div class="sidebar-content">
-        <div class="section-title">القائمة الرئيسية</div>
+        <div class="section-title">الركن الشرعي</div>
         
         <div class="menu-card" onclick="openQuran()">
             <div style="display:flex;align-items:center">
-                <div class="icon-box" style="background:linear-gradient(45deg, #8e44ad, #9b59b6)">📖</div>
+                <div class="icon-box" style="background:linear-gradient(45deg, #2c3e50, #34495e)">📖</div>
                 <span style="font-size:1rem; font-weight:700">القرآن الكريم</span>
+            </div>
+            <span style="color:#ccc; font-size:0.8rem">❮</span>
+        </div>
+
+        <div class="menu-card" onclick="toggleMenu()">
+            <div style="display:flex;align-items:center">
+                <div class="icon-box" style="background:linear-gradient(45deg, #27ae60, #2ecc71)">📿</div>
+                <span style="font-size:1rem; font-weight:700">الأذكار</span>
+            </div>
+            <span style="color:#ccc; font-size:0.8rem">❮</span>
+        </div>
+
+        <div class="section-title">أدوات إسلامية</div>
+
+        <div class="menu-card" onclick="toggleMenu()">
+            <div style="display:flex;align-items:center">
+                <div class="icon-box" style="background:linear-gradient(45deg, #2980b9, #3498db)">🕌</div>
+                <span style="font-size:1rem; font-weight:700">مواقيت الصلاة</span>
             </div>
         </div>
 
-        <div class="section-title">المطور</div>
-        <div class="menu-card">
+        <div class="menu-card" onclick="toggleMenu()">
             <div style="display:flex;align-items:center">
-                <div class="icon-box" style="background:linear-gradient(45deg, #e67e22, #f39c12)">☕</div>
-                <span style="font-size:0.95rem; font-weight:700">دعم العمل المستقبلي</span>
+                <div class="icon-box" style="background:linear-gradient(45deg, #8e44ad, #9b59b6)">📅</div>
+                <span style="font-size:1rem; font-weight:700">التقويم الهجري</span>
+            </div>
+        </div>
+
+        <div class="section-title">الدعم والمعلومات</div>
+
+        <div class="menu-card" onclick="toggleMenu()">
+            <div style="display:flex;align-items:center">
+                <div class="icon-box" style="background:linear-gradient(45deg, #d35400, #e67e22)">☕</div>
+                <span style="font-size:0.95rem; font-weight:700">ادعم المطور</span>
+            </div>
+        </div>
+
+        <div class="menu-card" onclick="toggleMenu()">
+            <div style="display:flex;align-items:center">
+                <div class="icon-box" style="background:linear-gradient(45deg, #7f8c8d, #95a5a6)">ℹ️</div>
+                <span style="font-size:0.95rem; font-weight:700">من نحن</span>
             </div>
         </div>
     </div>
@@ -394,17 +473,15 @@ const zikrLabel = document.getElementById('zikrLabel');
 const zikrDropdown = document.getElementById('zikrDropdown');
 const overlay = document.getElementById('overlay');
 
-/* QURAN DOM REFERENCES */
 const quranContainer = document.getElementById('quranContainer');
 const surahListDiv = document.getElementById('surahList');
 const surahViewDiv = document.getElementById('surahView');
 const quranTitle = document.getElementById('quranTitle');
 const quranHeaderBtn = document.getElementById('quranHeaderBtn');
 
-/* State */
 let allSurahs = [];
 let currentAyahs = [];
-let currentSurahId = null; // store current surah id for robust filtering
+let currentSurahId = null; 
 
 function init() {
     renderZikrDropdown();
@@ -414,7 +491,6 @@ function init() {
     });
 }
 
-// وظيفة إزالة التشكيل للبحث
 function removeDiacritics(text) {
     if (!text) return '';
     return text.replace(/[\u064B-\u065F\u0670\u0610-\u061A\u06D6-\u06ED]/g, "");
@@ -450,13 +526,10 @@ function updateDropdownCounts(){
 function toggleZikrDropdown(){ zikrDropdown.classList.toggle('open'); }
 function closeZikrDropdown(){ zikrDropdown.classList.remove('open'); }
 
-/* Improved escapeId: use base64-safe encoding for uniqueness and safety */
 function escapeId(s) {
     try {
-        // encode unicode safely to base64-like string (remove padding)
         return btoa(unescape(encodeURIComponent(s))).replace(/=+$/, '').replace(/\+/g,'-').replace(/\//g,'_');
     } catch (e) {
-        // fallback to simple safe replacement
         return s.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
     }
 }
@@ -487,18 +560,13 @@ function toggleMenu(){
     overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
 }
 
-/* QURAN LOGIC - fixed & hardened */
-
 async function openQuran() {
-    // Ensure sidebar is closed when opening the Quran container
     const sidebar = document.getElementById('sidebar');
     if (sidebar.classList.contains('active')) {
         sidebar.classList.remove('active');
         overlay.style.display = 'none';
     }
-
     quranContainer.style.display = 'block';
-    // fetch surahs only if not already loaded
     if(allSurahs.length === 0) await fetchSurahs();
 }
 
@@ -507,18 +575,15 @@ function closeQuran() {
     showSurahListUI(); 
 }
 
-/* fetchSurahs with robust error handling and response.ok check */
 async function fetchSurahs() {
     try {
         const response = await fetch('https://api.alquran.cloud/v1/surah');
-        if (!response.ok) throw new Error(`خطأ في الشبكة: ${response.status} ${response.statusText}`);
+        if (!response.ok) throw new Error(`خطأ: ${response.status}`);
         const data = await response.json();
-        if (!data || !data.data) throw new Error('تنسيق البيانات غير متوقع من الـ API');
         allSurahs = data.data;
         renderSurahs(allSurahs);
     } catch (e) {
-        console.error('fetchSurahs error:', e);
-        surahListDiv.innerHTML = `<p style="text-align:center; padding:30px; color:#999">تعذر تحميل المصحف. تأكد من اتصال الإنترنت أو جرب لاحقًا. (${e.message})</p>`;
+        surahListDiv.innerHTML = `<p style="text-align:center; padding:30px; color:#999">تعذر تحميل المصحف. (${e.message})</p>`;
     }
 }
 
@@ -533,7 +598,6 @@ function renderSurahs(list) {
     });
 }
 
-/* filterSurahs remains simple and effective */
 function filterSurahs() {
     const term = removeDiacritics(document.getElementById('quranSearch').value);
     const filtered = allSurahs.filter(s => 
@@ -543,9 +607,8 @@ function filterSurahs() {
     renderSurahs(filtered);
 }
 
-/* loadSurah now stores currentSurahId and checks response.ok */
 async function loadSurah(id, name) {
-    currentSurahId = id; // store id for later filtering
+    currentSurahId = id;
     quranTitle.innerText = 'جاري التحميل...';
     surahListDiv.style.display = 'none';
     surahViewDiv.style.display = 'block';
@@ -556,49 +619,46 @@ async function loadSurah(id, name) {
 
     try {
         const response = await fetch(`https://api.alquran.cloud/v1/surah/${id}/quran-uthmani`);
-        if (!response.ok) throw new Error(`خطأ في الشبكة: ${response.status}`);
         const data = await response.json();
-        if (!data || !data.data || !data.data.ayahs) throw new Error('تنسيق الآيات غير متوقع');
         currentAyahs = data.data.ayahs;
         quranTitle.innerText = name;
         displayAyahs(currentAyahs, id);
         quranContainer.scrollTo(0,0);
     } catch (e) {
-        console.error('loadSurah error:', e);
-        document.getElementById('ayahsContent').innerText = 'خطأ في تحميل الآيات. الرجاء المحاولة لاحقًا.';
+        document.getElementById('ayahsContent').innerText = 'خطأ في تحميل الآيات.';
     }
 }
 
-/* displayAyahs unchanged semantically but uses provided ayahs */
 function displayAyahs(ayahs, surahId) {
     let fullText = '';
-    // إضافة البسملة كعنوان إلا في الفاتحة والتوبة
+    // نص البسملة الموحد كما يأتي من API المصحف العثماني
+    const bismillahText = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
+
+    // 1. إضافة البسملة كعنوان منفصل في البداية (لكل السور عدا الفاتحة والتوبة)
     if (surahId != 1 && surahId != 9) {
-        fullText += '<div style="text-align:center; color:var(--primary-gold); margin-bottom:30px; font-size:2rem; font-family: Amiri">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>';
+        fullText += `<div style="text-align:center; color:var(--primary-gold); margin-bottom:30px; font-size:2.2rem; font-family: 'Amiri', serif;">${bismillahText}</div>`;
     }
 
     ayahs.forEach(ayah => {
         let txt = ayah.text;
-        // إزالة البسملة المكررة من الآية الأولى في المصحف العثماني
+
+        // 2. تنظيف الآية الأولى من البسملة المدمجة لتجنب التكرار
         if (surahId != 1 && ayah.numberInSurah === 1) {
-            const bismillah = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
-            if (txt.includes(bismillah)) {
-                txt = txt.replace(bismillah, "").trim();
+            // نستخدم replace للتخلص من البسملة إذا كانت موجودة في بداية النص
+            if (txt.startsWith(bismillahText)) {
+                txt = txt.replace(bismillahText, "").trim();
             }
         }
+
         fullText += `${txt} <span style="color:var(--primary-gold); font-family:Cairo; font-size:1.1rem"> ﴿${ayah.numberInSurah}﴾ </span> `;
     });
+
     document.getElementById('ayahsContent').innerHTML = fullText || '<p style="text-align:center; color:#999">لا توجد نتائج</p>';
 }
 
-/* filterAyahs uses currentAyahs and stored currentSurahId rather than guessing from title */
 function filterAyahs() {
     const term = removeDiacritics(document.getElementById('ayahSearch').value);
-    // if no currentAyahs, nothing to filter
-    if (!currentAyahs || currentAyahs.length === 0) {
-        document.getElementById('ayahsContent').innerHTML = '<p style="text-align:center; color:#999">لا توجد آيات للفلترة</p>';
-        return;
-    }
+    if (!currentAyahs || currentAyahs.length === 0) return;
     const filtered = currentAyahs.filter(a => removeDiacritics(a.text).includes(term));
     displayAyahs(filtered, currentSurahId);
 }
@@ -614,7 +674,6 @@ function showSurahListUI() {
     quranHeaderBtn.onclick = closeQuran;
 }
 
-/* Initialize */
 init();
 </script>
 
