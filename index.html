@@ -9,19 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ================= المتغيرات العامة (تصميم عصري ومبسط) ================= */
+        /* ================= المتغيرات العامة (تصميم نقي وبسيط) ================= */
         :root {
-            --primary-gold: #cfa858;
-            --dark-gold: #a6843c;
-            --light-gold: rgba(207, 168, 88, 0.1);
-            --bg-color: #f8fafc;
-            --surface-color: rgba(255, 255, 255, 0.85);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-            --text-dark: #0f172a;
+            --primary-gold: #b8860b;
+            --light-gold: #fdfaf2;
+            --bg-color: #f4f6f9;
+            --surface-color: #ffffff;
+            --border-color: #e2e8f0;
+            --text-dark: #1e293b;
             --text-muted: #64748b;
-            --sidebar-width: 280px;
-            --shadow-soft: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 260px;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.03);
+            --transition: all 0.25s ease-in-out;
         }
 
         * {
@@ -34,19 +33,17 @@
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, transparent 70%);
             color: var(--text-dark);
             overflow-x: hidden;
             display: flex;
             min-height: 100vh;
         }
 
-        /* ================= تأثيرات الزجاج (Glassmorphism) ================= */
-        .glass-panel {
+        /* ================= العناصر الأساسية ================= */
+        .card {
             background: var(--surface-color);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: var(--glass-border);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
             box-shadow: var(--shadow-soft);
         }
 
@@ -58,19 +55,21 @@
             right: 0;
             top: 0;
             z-index: 2000;
+            background: var(--surface-color);
+            border-left: 1px solid var(--border-color);
             transition: var(--transition);
             display: flex;
             flex-direction: column;
-            border-left: 1px solid rgba(0,0,0,0.03);
         }
 
         .sidebar-header {
-            padding: 40px 20px;
+            padding: 35px 20px;
             text-align: center;
+            border-bottom: 1px solid var(--light-gold);
         }
 
         .sidebar-logo {
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: var(--primary-gold);
             display: flex;
             align-items: center;
@@ -81,85 +80,83 @@
 
         .sidebar-nav {
             flex: 1;
-            padding: 0 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .nav-item {
-            padding: 16px 20px;
-            border-radius: 16px;
+            padding: 14px 18px;
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 15px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-muted);
             transition: var(--transition);
-            border: 1px solid transparent;
         }
 
         .nav-item:hover {
-            background: rgba(255,255,255,0.5);
+            background: var(--bg-color);
             color: var(--text-dark);
         }
 
         .nav-item.active {
             background: var(--light-gold);
             color: var(--primary-gold);
-            border: 1px solid rgba(207, 168, 88, 0.2);
-            box-shadow: 0 4px 15px rgba(207, 168, 88, 0.05);
+            border: 1px solid rgba(184, 134, 11, 0.15);
         }
 
-        .nav-item i { font-size: 1.3rem; width: 25px; text-align: center; }
+        .nav-item i { font-size: 1.2rem; width: 25px; text-align: center; }
 
         /* ================= المحتوى الرئيسي ================= */
         .main-content {
             margin-right: var(--sidebar-width);
             flex: 1;
-            position: relative;
-            transition: var(--transition);
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: var(--transition);
         }
 
         .mobile-header {
             display: none;
             width: 100%;
-            padding: 20px 25px;
+            padding: 15px 20px;
             align-items: center;
             justify-content: space-between;
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 1500;
-            border-bottom: 1px solid rgba(0,0,0,0.03);
         }
 
-        .menu-toggle { background: none; border: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+        .menu-toggle { background: none; border: none; font-size: 1.4rem; color: var(--text-dark); cursor: pointer; }
 
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.2); backdrop-filter: blur(4px);
-            z-index: 1900; opacity: 0; visibility: hidden; transition: var(--transition);
+            background: rgba(0, 0, 0, 0.4); z-index: 1900; 
+            opacity: 0; visibility: hidden; transition: var(--transition);
         }
 
         .view-section {
             display: none; 
             width: 100%; 
-            max-width: 900px; 
-            animation: fadeIn 0.4s ease; 
-            padding: 50px 20px; 
+            max-width: 800px; 
+            padding: 40px 20px; 
             flex-direction: column; 
             align-items: center; 
             flex: 1;
+            animation: fadeIn 0.3s ease;
         }
 
         .view-section.active { display: flex; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 900px) {
             .sidebar { transform: translateX(100%); }
@@ -167,153 +164,101 @@
             .main-content { margin-right: 0; }
             .mobile-header { display: flex; }
             .overlay.open { opacity: 1; visibility: visible; }
-            .view-section { padding: 30px 15px; }
+            .view-section { padding: 25px 15px; }
         }
 
         /* ================= قسم التسبيح ================= */
-        .tasbeeh-wrapper { width: 100%; max-width: 450px; display: flex; flex-direction: column; align-items: center; }
+        .tasbeeh-wrapper { width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; }
+        
+        .t-title { font-size: 2.2rem; color: var(--primary-gold); margin-bottom: 30px; text-align: center; font-family: 'Amiri Quran', serif; }
         
         .t-top-select {
-            padding: 14px 30px; border-radius: 50px;
-            font-size: 1.1rem; font-weight: 700; color: var(--text-dark);
-            display: inline-flex; align-items: center; gap: 12px; cursor: pointer; margin-bottom: 40px; transition: var(--transition);
+            background: var(--surface-color); padding: 12px 24px; border-radius: 30px; border: 1px solid var(--border-color);
+            font-size: 1rem; font-weight: 700; color: var(--text-dark);
+            display: inline-flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 40px; transition: var(--transition);
         }
-        .t-top-select:hover { border-color: var(--primary-gold); color: var(--primary-gold); box-shadow: 0 4px 15px rgba(207, 168, 88, 0.1); }
+        .t-top-select:hover { border-color: var(--primary-gold); color: var(--primary-gold); }
         
         .t-dropdown {
-            position: absolute; width: 260px; border-radius: 20px;
-            padding: 12px; opacity: 0; visibility: hidden; 
-            transition: var(--transition); z-index: 2000; top: 65px; left: 50%; transform: translateX(-50%) translateY(10px);
-            max-height: 350px; overflow-y: auto;
+            position: absolute; width: 260px; border-radius: 16px; background: var(--surface-color); border: 1px solid var(--border-color);
+            padding: 10px; opacity: 0; visibility: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: var(--transition); z-index: 2000; top: 60px; left: 50%; transform: translateX(-50%) translateY(10px);
+            max-height: 300px; overflow-y: auto;
         }
         .t-dropdown.open { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
         
-        .t-item { padding: 14px 18px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
-        .t-item:hover { background: rgba(0,0,0,0.03); color: var(--text-dark); }
-        .t-item.selected { background: var(--light-gold); color: var(--primary-gold); font-weight: 800; }
+        .t-item { padding: 12px 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+        .t-item:hover { background: var(--bg-color); color: var(--text-dark); }
+        .t-item.selected { background: var(--light-gold); color: var(--primary-gold); }
         
-        .t-count-badge { background: rgba(0,0,0,0.05); color: var(--text-dark); padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800; }
+        .t-count-badge { background: var(--bg-color); color: var(--text-muted); padding: 4px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; }
         .t-item.selected .t-count-badge { background: var(--primary-gold); color: white; }
 
-        .add-zikr-btn { justify-content: center; color: var(--primary-gold); font-weight: 800; gap: 10px; margin-top: 5px; border: 1px dashed rgba(207, 168, 88, 0.4); }
-        .add-zikr-btn:hover { background: var(--primary-gold); color: white; border-style: solid; }
+        .add-zikr-btn { justify-content: center; color: var(--primary-gold); gap: 8px; margin-top: 5px; border: 1px dashed var(--primary-gold); }
+        .add-zikr-btn:hover { background: var(--primary-gold); color: white; }
         
-        .t-title { font-size: 2.8rem; color: var(--primary-gold); margin-bottom: 50px; text-align: center; font-family: 'Amiri Quran', serif; line-height: 1.4; text-shadow: 0 4px 20px rgba(207,168,88,0.2); }
-        
-        /* زر التسبيح الاحترافي */
+        /* زر التسبيح النظيف */
         .t-circle {
-            width: 260px; height: 260px; border-radius: 50%; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; cursor: pointer; user-select: none; margin: 0 auto;
-            border: 1px solid rgba(255,255,255,0.8);
-            box-shadow: 0 25px 50px -12px rgba(207, 168, 88, 0.15), inset 0 0 20px rgba(255,255,255,0.5);
-            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s;
-            position: relative;
+            width: 240px; height: 240px; border-radius: 50%; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; cursor: pointer; user-select: none;
+            background: var(--surface-color); border: 4px solid var(--light-gold);
+            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.1);
+            transition: transform 0.1s;
         }
-        .t-circle::after {
-            content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
-            border-radius: 50%; border: 2px solid rgba(207, 168, 88, 0.15);
-            transition: var(--transition);
-        }
-        .t-circle:active { transform: scale(0.92); box-shadow: 0 10px 20px rgba(207, 168, 88, 0.1); }
-        .t-circle:active::after { transform: scale(0.98); border-color: rgba(207, 168, 88, 0.3); }
+        .t-circle:active { transform: scale(0.95); border-color: var(--primary-gold); background: var(--light-gold); }
         
-        .t-number { font-size: 6rem; font-weight: 900; color: var(--text-dark); line-height: 1; margin-bottom: 5px; font-family: 'Cairo', sans-serif;}
-        .t-label { color: var(--text-muted); font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; }
+        .t-number { font-size: 5rem; font-weight: 900; color: var(--text-dark); line-height: 1; font-family: 'Cairo', sans-serif; }
+        .t-label { color: var(--text-muted); font-size: 1rem; font-weight: 700; margin-top: 5px;}
         
-        .t-actions { display: flex; gap: 15px; margin-top: 60px; justify-content: center; width: 100%; }
-        .t-btn { flex: 1; padding: 16px; border-radius: 16px; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: var(--transition); color: var(--text-muted); border: none; }
-        .t-btn:hover { color: var(--text-dark); background: rgba(0,0,0,0.03); transform: translateY(-2px); }
-        .t-btn-reset:hover { color: #ef4444; background: #fef2f2; }
+        .t-actions { display: flex; gap: 15px; margin-top: 40px; width: 100%; }
+        .t-btn { flex: 1; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: var(--transition); color: var(--text-muted); background: var(--surface-color); border: 1px solid var(--border-color); }
+        .t-btn:hover { color: var(--text-dark); background: var(--bg-color); }
+        .t-btn-reset:hover { color: #dc2626; border-color: #fca5a5; background: #fef2f2; }
 
         /* ================= المصحف ================= */
-        .q-wrapper { width: 100%; max-width: 800px; display: flex; flex-direction: column; align-items: center;}
+        .q-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center;}
         #q-list-view { width: 100%; }
-        .q-search { width: 100%; padding: 22px 30px; border-radius: 20px; font-size: 1.1rem; font-weight: 600; outline: none; margin-bottom: 30px; transition: 0.3s; color: var(--text-dark); border: 1px solid rgba(0,0,0,0.05);}
-        .q-search::placeholder { color: #94a3b8; }
-        .q-search:focus { border-color: rgba(207, 168, 88, 0.4); box-shadow: 0 0 0 4px rgba(207, 168, 88, 0.1); transform: translateY(-2px); }
+        .q-search { width: 100%; padding: 18px 25px; border-radius: 16px; font-size: 1.05rem; font-weight: 600; outline: none; margin-bottom: 25px; transition: 0.2s; color: var(--text-dark); background: var(--surface-color); border: 1px solid var(--border-color); }
+        .q-search:focus { border-color: var(--primary-gold); box-shadow: 0 0 0 3px var(--light-gold); }
         
-        .q-surah-card { padding: 22px; border-radius: 20px; display: flex; align-items: center; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
-        .q-surah-card:hover { border-color: rgba(207, 168, 88, 0.3); transform: translateY(-3px); box-shadow: 0 15px 30px -10px rgba(0,0,0,0.08); }
-        .q-num { width: 55px; height: 55px; background: var(--light-gold); color: var(--primary-gold); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3rem; margin-left: 20px; }
-        .q-info { flex: 1; }
-        .q-name { font-weight: 800; font-size: 1.4rem; margin-bottom: 4px; color: var(--text-dark); }
-        .q-details { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; }
+        .q-surah-card { background: var(--surface-color); padding: 18px; border-radius: 16px; border: 1px solid var(--border-color); display: flex; align-items: center; margin-bottom: 12px; cursor: pointer; transition: 0.2s; }
+        .q-surah-card:hover { border-color: var(--primary-gold); box-shadow: 0 4px 15px rgba(0,0,0,0.03); transform: translateY(-2px); }
+        .q-num { width: 45px; height: 45px; background: var(--light-gold); color: var(--primary-gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; margin-left: 15px; }
+        .q-name { font-weight: 800; font-size: 1.2rem; color: var(--text-dark); }
+        .q-details { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; margin-top: 3px; }
         
-        /* شاشة قراءة المصحف */
-        .q-reader { display: none; padding: 50px; border-radius: 30px; width: 100%;}
-        .q-reader-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 25px; border-bottom: 1px solid rgba(0,0,0,0.05); flex-wrap: wrap; gap: 15px; }
+        /* شاشة القراءة */
+        .q-reader { display: none; padding: 40px; border-radius: 20px; width: 100%; background: var(--surface-color); border: 1px solid var(--border-color); }
+        .q-reader-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap; gap: 15px; }
         
-        .q-btn { background: rgba(0,0,0,0.03); color: var(--text-dark); border: none; padding: 14px 28px; border-radius: 16px; font-weight: 800; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; }
-        .q-btn:hover { background: var(--primary-gold); color: white; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(207,168,88,0.2); }
+        .q-btn { background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-dark); padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .q-btn:hover { background: var(--light-gold); color: var(--primary-gold); border-color: var(--primary-gold); }
         
-        .q-font-controls { display: flex; align-items: center; background: rgba(0,0,0,0.02); border-radius: 16px; padding: 6px; border: 1px solid rgba(0,0,0,0.03); }
-        .q-font-controls button { background: none; border: none; width: 45px; height: 45px; border-radius: 12px; font-size: 1.2rem; color: var(--text-dark); cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; }
-        .q-font-controls button:hover { background: white; color: var(--primary-gold); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .q-font-controls span { margin: 0 15px; font-size: 1.2rem; color: var(--text-muted); }
+        .q-font-controls { display: flex; align-items: center; background: var(--bg-color); border-radius: 12px; padding: 4px; border: 1px solid var(--border-color); }
+        .q-font-controls button { background: transparent; border: none; width: 35px; height: 35px; border-radius: 8px; font-size: 1.1rem; color: var(--text-dark); cursor: pointer; transition: 0.2s; }
+        .q-font-controls button:hover { background: var(--surface-color); color: var(--primary-gold); }
+        .q-font-controls span { margin: 0 10px; color: var(--text-muted); font-size: 1rem;}
 
-        .q-bismillah { text-align: center; color: var(--primary-gold); font-size: 1.2em; font-family: 'Amiri Quran', serif; margin-bottom: 25px; opacity: 0.9; }
-        .q-ayahs { font-family: 'Amiri Quran', serif; font-size: 2.2rem; line-height: 2.4; text-align: justify; direction: rtl; color: var(--text-dark); transition: font-size 0.3s ease; }
-        .q-ayah-num { color: var(--primary-gold); font-family: 'Cairo', sans-serif; font-size: 0.6em; font-weight: 800; margin: 0 8px; }
+        .q-bismillah { text-align: center; color: var(--primary-gold); font-size: 1.4em; font-family: 'Amiri Quran', serif; margin-bottom: 30px; }
+        .q-ayahs { font-family: 'Amiri Quran', serif; font-size: 2.2rem; line-height: 2.2; text-align: justify; direction: rtl; color: var(--text-dark); }
+        .q-ayah-num { color: var(--primary-gold); font-family: 'Cairo', sans-serif; font-size: 0.55em; font-weight: 800; margin: 0 5px; }
 
         @media (max-width: 600px) {
-            .q-reader { padding: 30px 20px; }
+            .q-reader { padding: 20px 15px; }
             .q-reader-header { flex-direction: column; align-items: stretch; }
             .q-btn, .q-font-controls { justify-content: center; }
         }
 
-        /* ================= مواقيت الصلاة (محدث واحترافي) ================= */
-        .prayer-section-wrapper {
-            width: 100%;
-            max-width: 500px; /* لضمان عدم تمدد الوديجت بشكل مشوه على الشاشات الكبيرة */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .prayer-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .prayer-header h2 {
-            font-size: 2.5rem;
-            color: var(--primary-gold);
-            font-family: 'Amiri Quran', serif;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 15px rgba(207, 168, 88, 0.15);
-        }
-
-        .prayer-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .prayer-container {
-            width: 100%;
-            border-radius: 24px;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
-        }
-
-        .prayer-container iframe {
-            width: 100%;
-            height: 275px; /* ارتفاع مناسب يمنع ظهور أشرطة التمرير */
-            border: none;
-            overflow: hidden;
-            border-radius: 12px; /* لمسة ناعمة لحواف الـ iframe نفسه */
-            background-color: transparent;
-        }
+        /* ================= مواقيت الصلاة ================= */
+        .prayer-container { width: 100%; border-radius: 20px; padding: 15px; display: flex; justify-content: center; align-items: center; background: var(--surface-color); border: 1px solid var(--border-color); box-shadow: var(--shadow-soft); }
+        .prayer-container iframe { width: 100%; height: 275px; border: none; border-radius: 12px; }
     </style>
 </head>
 <body>
 
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-    <aside class="sidebar glass-panel" id="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
                 <i class="fa-solid fa-bahai"></i>
@@ -325,7 +270,7 @@
                 <i class="fa-solid fa-fingerprint"></i> المُسَبِّحَة
             </div>
             <div class="nav-item" onclick="switchTab('quran', this)">
-                <i class="fa-solid fa-book-open"></i> المصحف
+                <i class="fa-solid fa-book-open"></i> المصحف الشريف
             </div>
             <div class="nav-item" onclick="switchTab('prayer', this)">
                 <i class="fa-solid fa-mosque"></i> مواقيت الصلاة
@@ -334,38 +279,31 @@
     </aside>
 
     <main class="main-content">
-        <div class="mobile-header glass-panel">
-            <h2 id="mobile-title" style="font-size: 1.5rem; font-weight: 900; color: var(--primary-gold); font-family: 'Amiri Quran', serif;">المُسَبِّحَة</h2>
-            <button class="menu-toggle" onclick="toggleMenu()">
-                <i class="fa-solid fa-bars-staggered"></i>
-            </button>
+        <div class="mobile-header">
+            <h2 id="mobile-title" style="font-size: 1.3rem; font-weight: 800; color: var(--primary-gold);">المُسَبِّحَة</h2>
+            <button class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars-staggered"></i></button>
         </div>
 
         <section id="view-tasbeeh" class="view-section active">
             <div class="tasbeeh-wrapper">
-                
                 <h2 class="t-title" id="t-current-zikr">سبحان الله</h2>
 
                 <div style="position: relative; width: 100%; display: flex; justify-content: center;">
-                    <div class="t-top-select glass-panel" onclick="document.getElementById('t-dropdown').classList.toggle('open')">
+                    <div class="t-top-select" onclick="document.getElementById('t-dropdown').classList.toggle('open')">
                         <span id="t-label">تغيير الذكر</span>
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
-                    <div id="t-dropdown" class="t-dropdown glass-panel"></div>
+                    <div id="t-dropdown" class="t-dropdown"></div>
                 </div>
 
-                <div class="t-circle glass-panel" onclick="t_increment()" id="t-circle">
+                <div class="t-circle" onclick="t_increment()" id="t-circle">
                     <span class="t-number" id="t-counter">0</span>
                     <span class="t-label">تسبيحة</span>
                 </div>
 
                 <div class="t-actions">
-                    <button class="t-btn glass-panel" onclick="t_decrement()">
-                        <i class="fa-solid fa-minus"></i> تراجع
-                    </button>
-                    <button class="t-btn t-btn-reset glass-panel" onclick="t_reset()">
-                        <i class="fa-solid fa-rotate-left"></i> تصفير
-                    </button>
+                    <button class="t-btn" onclick="t_decrement()"><i class="fa-solid fa-minus"></i> تراجع</button>
+                    <button class="t-btn t-btn-reset" onclick="t_reset()"><i class="fa-solid fa-rotate-left"></i> تصفير</button>
                 </div>
             </div>
         </section>
@@ -373,21 +311,18 @@
         <section id="view-quran" class="view-section">
             <div class="q-wrapper">
                 <div id="q-list-view">
-                    <input type="text" id="q-search" class="q-search glass-panel" placeholder="ابحث باسم السورة أو رقمها..." oninput="q_filterSurahs()">
+                    <input type="text" id="q-search" class="q-search" placeholder="ابحث باسم السورة أو رقمها..." oninput="q_filterSurahs()">
                     <div id="q-surahs-container">
                         <div style="text-align: center; padding: 40px; color: var(--text-muted); font-weight: 700;">
                             <i class="fa-solid fa-circle-notch fa-spin fa-2x" style="color: var(--primary-gold); margin-bottom: 15px;"></i><br>
-                            جاري تحميل المصحف الشريف...
+                            جاري تحميل السور...
                         </div>
                     </div>
                 </div>
 
-                <div id="q-reader-view" class="q-reader glass-panel">
+                <div id="q-reader-view" class="q-reader">
                     <div class="q-reader-header">
-                        <button class="q-btn" onclick="q_showList()">
-                            <i class="fa-solid fa-arrow-right"></i> عودة للقائمة
-                        </button>
-                        
+                        <button class="q-btn" onclick="q_showList()"><i class="fa-solid fa-arrow-right"></i> القائمة</button>
                         <div class="q-font-controls">
                             <button onclick="q_changeFontSize(0.2)" title="تكبير الخط"><i class="fa-solid fa-plus"></i></button>
                             <span><i class="fa-solid fa-font"></i></span>
@@ -395,24 +330,19 @@
                         </div>
                     </div>
                     
-                    <h2 id="q-surah-title" style="text-align: center; color: var(--text-dark); margin-bottom: 25px; font-weight: 900; font-size: 2.5rem; font-family: 'Amiri Quran', serif;"></h2>
+                    <h2 id="q-surah-title" style="text-align: center; color: var(--text-dark); margin-bottom: 25px; font-weight: 800; font-size: 2rem; font-family: 'Amiri Quran', serif;"></h2>
                     <div id="q-ayahs-content" class="q-ayahs"></div>
                 </div>
             </div>
         </section>
 
         <section id="view-prayer" class="view-section">
-            <div class="prayer-section-wrapper">
-                <div class="prayer-header">
-                    <h2>مواقيت الصلاة</h2>
-                    <p>تعرف على أوقات الصلاة المحدثة لمدينتك</p>
-                </div>
-                <div class="prayer-container glass-panel">
-                    <iframe src="https://timesprayer.com/widgets.php?frame=3&amp;lang=ar&amp;name=cairo&amp;avachang=true&amp;fcolor=CFA858&amp;tcolor=AB8B49&amp;frcolor=705B30" scrolling="no" title="مواقيت الصلاة"></iframe>
-                </div>
+            <div style="width: 100%; max-width: 500px;">
+                <h2 style="text-align: center; color: var(--primary-gold); font-family: 'Amiri Quran', serif; font-size: 2.2rem; margin-bottom: 20px;">مواقيت الصلاة</h2>
+                <div class="prayer-container">
+<iframe src="https://timesprayer.com/widgets.php?frame=3&amp;lang=ar&amp;name=cairo&amp;fcolor=CFA858&amp;tcolor=63512A&amp;frcolor=E8BC63" style="border: none; overflow: hidden; width: 100%; height: 220px;"></iframe>                </div>
             </div>
         </section>
-
     </main>
 
     <script>
@@ -432,10 +362,9 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // ================= 1. التسبيح =================
+        // --- 1. التسبيح ---
         let t_allCounts = JSON.parse(localStorage.getItem('allCounts')) || {};
         let t_savedZikr = localStorage.getItem("selectedZikr") || "سبحان الله";
-        
         const defaultZikrList = ['سبحان الله', 'الحمد لله', 'الله أكبر', 'أستغفر الله', 'لا إله إلا الله', 'اللهم صلِ على محمد', 'لا حول ولا قوة إلا بالله'];
         let zikrList = JSON.parse(localStorage.getItem('customZikrList')) || defaultZikrList;
 
@@ -450,7 +379,6 @@
 
         function t_renderDropdown() {
             const dd = document.getElementById('t-dropdown'); dd.innerHTML = '';
-            
             zikrList.forEach(z => {
                 const item = document.createElement('div');
                 item.className = 't-item' + (z === t_savedZikr ? ' selected' : '');
@@ -458,11 +386,10 @@
                 item.onclick = () => { t_savedZikr = z; dd.classList.remove('open'); t_init(); };
                 dd.appendChild(item);
             });
-
             const addBtn = document.createElement('div');
             addBtn.className = 't-item add-zikr-btn';
             addBtn.innerHTML = `<i class="fa-solid fa-plus"></i> إضافة ذكر جديد`;
-            addBtn.onclick = () => { dd.classList.remove('open'); t_addNewZikr(); };
+            addBtn.onclick = () => { dd.classList.remove('open'); setTimeout(t_addNewZikr, 100); };
             dd.appendChild(addBtn);
         }
 
@@ -475,15 +402,13 @@
                     localStorage.setItem('customZikrList', JSON.stringify(zikrList));
                     t_savedZikr = trimmedZikr;
                     t_init();
-                } else {
-                    alert("هذا الذكر موجود بالفعل في القائمة!");
-                }
+                } else { alert("هذا الذكر موجود بالفعل في القائمة!"); }
             }
         }
 
         function t_increment() {
             t_allCounts[t_savedZikr] = (t_allCounts[t_savedZikr] || 0) + 1;
-            if(navigator.vibrate) navigator.vibrate(15);
+            if(navigator.vibrate) navigator.vibrate(10);
             t_updateUI(); t_renderDropdown();
         }
 
@@ -497,8 +422,8 @@
             }
         }
 
-        // ================= 2. المصحف =================
-        let q_allSurahs = [], q_currentAyahs = [];
+        // --- 2. المصحف ---
+        let q_allSurahs = [];
         let q_fontSize = parseFloat(localStorage.getItem('quranFontSize')) || 2.2;
 
         async function q_init() {
@@ -508,7 +433,7 @@
                 q_allSurahs = (await res.json()).data;
                 q_renderSurahs(q_allSurahs);
             } catch (e) { 
-                document.getElementById('q-surahs-container').innerHTML = '<div style="color:#ef4444; text-align:center; padding: 20px; font-weight:bold;">تعذر تحميل المصحف. يرجى التحقق من اتصالك بالإنترنت.</div>'; 
+                document.getElementById('q-surahs-container').innerHTML = '<div style="color:#ef4444; text-align:center; padding: 20px;">تعذر تحميل المصحف. يرجى التحقق من الإنترنت.</div>'; 
             }
         }
 
@@ -516,28 +441,23 @@
             q_fontSize += change;
             if (q_fontSize < 1.5) q_fontSize = 1.5; 
             if (q_fontSize > 4.5) q_fontSize = 4.5; 
-            
             q_applyFontSize();
             localStorage.setItem('quranFontSize', q_fontSize);
         }
 
-        function q_applyFontSize() {
-            document.getElementById('q-ayahs-content').style.fontSize = q_fontSize + 'rem';
-        }
-
+        function q_applyFontSize() { document.getElementById('q-ayahs-content').style.fontSize = q_fontSize + 'rem'; }
         function q_toArabic(num) { return num.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]); }
         function q_removeDiacritics(txt) { return txt ? txt.replace(/[\u064B-\u065F\u0670\u0610-\u061A\u06D6-\u06ED]/g, "") : ''; }
 
         function q_renderSurahs(list) {
-            const container = document.getElementById('q-surahs-container'); container.innerHTML = '';
-            if(!list.length) return container.innerHTML = '<div style="text-align:center; padding:20px;">لا توجد نتائج مطابقة لبحثك.</div>';
-            
+            const container = document.getElementById('q-surahs-container');
+            if(!list.length) { container.innerHTML = '<div style="text-align:center; padding:20px;">لا توجد نتائج.</div>'; return; }
             let html = '';
             list.forEach(s => {
                 html += `
-                <div class="q-surah-card glass-panel" onclick="q_loadSurah(${s.number}, '${s.name}')">
+                <div class="q-surah-card" onclick="q_loadSurah(${s.number}, '${s.name}')">
                     <div class="q-num">${q_toArabic(s.number)}</div>
-                    <div class="q-info">
+                    <div style="flex:1;">
                         <div class="q-name">${s.name}</div>
                         <div class="q-details">${q_toArabic(s.numberOfAyahs)} آية - ${s.revelationType === 'Meccan' ? 'مكية' : 'مدنية'}</div>
                     </div>
@@ -559,20 +479,25 @@
             
             try {
                 const res = await fetch(`https://api.alquran.cloud/v1/surah/${id}/quran-uthmani`);
-                q_currentAyahs = (await res.json()).data.ayahs;
+                const ayahs = (await res.json()).data.ayahs;
                 document.getElementById('q-surah-title').innerText = name;
-                q_displayAyahs(q_currentAyahs, id);
+                q_displayAyahs(ayahs, id);
                 window.scrollTo({top: 0, behavior: 'smooth'});
             } catch (e) { 
-                document.getElementById('q-ayahs-content').innerHTML = '<div style="color:#ef4444; text-align:center;">حدث خطأ أثناء تحميل السورة. حاول مرة أخرى.</div>'; 
+                document.getElementById('q-ayahs-content').innerHTML = '<div style="color:#ef4444; text-align:center;">حدث خطأ. حاول مرة أخرى.</div>'; 
             }
         }
 
         function q_displayAyahs(ayahs, surahId) {
+            // إضافة البسملة كعنوان علوي لجميع السور عدا الفاتحة (1) والتوبة (9)
             let html = (surahId !== 1 && surahId !== 9) ? `<div class="q-bismillah">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>` : '';
+            
             ayahs.forEach(a => {
                 let txt = a.text;
-                if (surahId !== 1 && surahId !== 9 && a.numberInSurah === 1) txt = txt.replace(/^بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ\s*|^بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ\s*/, "");
+                // إزالة البسملة من الآية الأولى إذا كانت موجودة (بالتطابق الدقيق مع مخرجات الـ API)
+                if (surahId !== 1 && surahId !== 9 && a.numberInSurah === 1) {
+                    txt = txt.replace("بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ", "");
+                }
                 html += `${txt} <span class="q-ayah-num">﴿${q_toArabic(a.numberInSurah)}﴾</span> `;
             });
             document.getElementById('q-ayahs-content').innerHTML = html;
@@ -583,11 +508,9 @@
             document.getElementById('q-reader-view').style.display = 'none';
         }
 
-        // ================= التهيئة العامة =================
+        // --- التهيئة العامة ---
         window.onload = () => {
             t_init(); q_init();
-            
-            // إغلاق قائمة الأذكار عند الضغط خارجها
             document.addEventListener('click', (e) => {
                 const tDropdown = document.getElementById('t-dropdown');
                 if (!e.target.closest('.t-top-select') && !e.target.closest('.t-dropdown') && tDropdown.classList.contains('open')) {
